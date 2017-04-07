@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>录播</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+         <link rel="stylesheet" href="../dest/public/css/bootstrap.min.css">
+         <style>
+           .result{
+               display: none;
+           }
+         </style>
+    </head>
+    <body>
+    <div class="page-header">
+            <h1>录播：</h1>
+    </div>
+    <div class="container">
+            <span>摄像头编号：</span>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default c">摄像头1</button>
+                <button type="button" class="btn btn-default c">摄像头2</button>
+                <button type="button" class="btn btn-default c">摄像头3</button>
+                <button type="button" class="btn btn-default c">摄像头4</button>
+                <button type="button" class="btn btn-default c">摄像头5</button>
+                <button type="button" class="btn btn-default c">摄像头6</button>
+            </div>
+            
+            <br>
+            <br>
+            <span>现在选择摄像头</span><span id="c_num">1</span>
+            <br>
+            <br>
+            
+            
+            <div class="input-group input-group-lg">
+                 <span class="input-group-addon">时间：</span>
+                 <input type="text" class="form-control" placeholder="time" id="time" style="width:560px">
+                 <button type="button" class="btn btn-default" id="postRecord" style="margin-left:30px;margin-top:10px;">提交</button>
+            </div>
+            <br>
+            <br>
+            <br>
+            
+
+            <div id="video-container">
+                <video height="360" width="640" id="video" src="../out.mp4" controls>
+
+                </video>
+                <button id="capture">Capture</button>
+                <div id="output">
+                    <canvas id="canvas" height="360" width="640">
+                        
+                    </canvas>
+                    <button id="postPath">提交</button>
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="result">
+            <span>选择你要看的路径视频：</span>
+            <select id="reultOption">
+                
+            </select>
+            <div>
+                <div class="left-container" style="float:left">
+                    <video height="360" width="640" src="" controls id="resultVideo">
+
+                    </video>
+                </div>
+                <div class="right-container" style="float:right">
+                    <span>结果路径图</span>
+                    <img src="" width="389" height="471" id="resultImg">
+                </div>
+            </div>
+        </div>
+
+    </body>
+     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="../dest/public/js/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="../dest/public/js/bootstrap.min.js"></script>
+
+    <script>
+    var localhost='http://10.199.155.173:8080'
+    var recordUrl=localhost+"/sp/record"
+    
+    var videoPre=localhost+"/asura"
+    
+    var pathUrl=localhost+"/sp/result"
+
+    
+
+    Date.prototype.pattern=function(fmt) {         
+    var o = {         
+    "M+" : this.getMonth()+1, //月份         
+    "d+" : this.getDate(), //日         
+    "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时         
+    "H+" : this.getHours(), //小时         
+    "m+" : this.getMinutes(), //分         
+    "s+" : this.getSeconds(), //秒         
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度         
+    "S" : this.getMilliseconds() //毫秒         
+    };         
+    var week = {         
+    "0" : "/u65e5",         
+    "1" : "/u4e00",         
+    "2" : "/u4e8c",         
+    "3" : "/u4e09",         
+    "4" : "/u56db",         
+    "5" : "/u4e94",         
+    "6" : "/u516d"        
+    };         
+    if(/(y+)/.test(fmt)){         
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));         
+    }         
+    if(/(E+)/.test(fmt)){         
+        fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);         
+    }         
+    for(var k in o){         
+        if(new RegExp("("+ k +")").test(fmt)){         
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));         
+        }         
+    }         
+    return fmt;         
+}
+var norRecordUrl = ''       
+var date = new Date();      
+//alert(date.pattern("yyyy-MM-dd hh:mm:ss"));
+    (function() {
+
+  var video, $output;
+  var scale = 0.5;
+  var initialize = function() {
+    $output = $("#output");
+    video = $("video").get(0);
+    $("#capture").click(captureImage);        
+  };
+  var canvas = document.getElementById("canvas");
+  var captureImage = function() {
+  	video.pause()
+    console.log(getNowTime())
+    canvas.width = video.videoWidth * scale;
+    canvas.height = video.videoHeight * scale;
+    canvas.getContext('2d')
+       .drawImage(video, 0, 0, canvas.width, canvas.height);
+   
+    
+  };
+
+  canvas.addEventListener("mousedown", function (evt) {  
+    captureImage() 
+    var mousePos = getMousePos(canvas, evt); 
+    var beginX=mousePos.x;
+    var beginY=mousePos.y;
+
+    //alert(mousePos.x + ',' + mousePos.y);
+    function temp(evt){
+        var mousePosEnd = getMousePos(canvas, evt); 
+        console.log('****')
+        Xian(beginX,beginY,mousePosEnd.x,mousePosEnd.y);
+        canvas.removeEventListener('mouseup',temp);
+    }
+    canvas.addEventListener("mouseup",temp)
+}, false);  
+//Get Mouse Position   
+function getMousePos(canvas, evt) {   
+    var rect = canvas.getBoundingClientRect();   
+    return {   
+        x: evt.clientX - rect.left,   
+        y: evt.clientY - rect.top   
+    };   
+} 
+
+function getNowTime(){
+    var year=$("#time").val().slice(0,11)
+    var time=Math.floor(video.currentTime)
+    var min=Math.floor(time/60)
+    if(new String(min).length<=1){
+        min='0'+min
+    }
+    var sec=Math.floor(time%60)
+    return year+'00:'+min+':'+sec
+}
+ 
+function Xian(x,y,ex,ey) {
+    beginX = x
+    beginY = y
+    endX = ex
+    endY = ey
+    console.log('***')
+	var test=canvas.getContext('2d');
+	test.strokeStyle = "red";
+	test.lineWidth = 1;
+	test.beginPath();
+	test.moveTo(x, y);//设置起点
+	test.lineTo(ex,y);//画线
+	test.moveTo(ex, y);//拿起画笔到新坐标
+	test.lineTo(ex, ey);//画线
+	test.moveTo(ex, ey);
+	test.lineTo(x, ey);//画线
+	test.moveTo(x, ey);
+	test.lineTo(x, y);//画线
+	test.closePath();
+	test.stroke();
+	console.log(`(${x},${y})`)
+	console.log(`(${ex},${ey})`)
+}
+  $('#postPath').click(function(){
+    console.log(`(${beginX},${beginY})`)
+    $.ajax({
+            url:pathUrl,
+            type:"post",
+            data:{
+                cnum:norRecordUrl||'',
+                starttime:$("#time").val(),
+                nowtime:getNowTime(),
+                leftT:`(${beginX},${beginY})`,
+                rightB:`(${endX},${endY})`
+            },
+            success:function(data){
+               data=JSON.parse(data)
+               getPath(data)
+            }
+     })
+})
+  $(initialize);      
+}());
+
+
+
+
+
+
+function getPath(data){
+    $('#video-container').hide()
+    $('.result').show()
+    var array=data.url;
+    
+    $('#resultImg').attr("src",localhost+array[0].pPath)
+    for(var i=0;i<array.length;i++){
+       var option=$('<option>').attr("value",array[i].vPath).text(array[i].vUrl)
+       $('#reultOption').append(option)
+    }
+
+}
+
+$('#reultOption').change(function(){
+    $('#resultVideo').attr('src',localhost+this.value)
+    console.log(this.value)
+})
+
+
+var _cNum=1;
+$(".c").click(function(){
+    _cNum=$(this).text()[3]
+    $("#c_num").text(_cNum)
+    console.log(_cNum)
+})
+
+$('#postRecord').click(function(){
+    $.ajax({
+        url:recordUrl,
+        type:"post",
+        data:{
+            cnum:_cNum,
+            time:$("#time").val()
+        },
+        success:function(data){
+            data=JSON.parse(data)
+            norRecordUrl=data.url
+            $("video").attr("src",videoPre+data.url)
+        }
+    })
+})
+        
+
+
+       
+
+
+
+
+    </script>
+</html>

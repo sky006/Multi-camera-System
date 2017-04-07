@@ -1,0 +1,68 @@
+@import "tool/base.scss";
+@import "tool/_size.scss";
+@import "tool/_center.scss";
+@import "tool/_clearfix.scss";
+
+body,html{
+    height: 100%;
+}
+li{
+    list-style: none;
+}
+
+.side-bg{
+    background: $maincolor;
+}
+
+
+@media only screen and (max-width: 992px){
+    header, main, footer {
+        padding-left: 0 !important; 
+    }
+}
+.main-container{
+    // padding-left: 300px;
+    background: #eeefff;
+    height: 100%;
+    header{
+        padding-left:300px;
+    }
+    // header{
+    //     margin-left: 300px;
+    //     padding: 10px;
+    //     text-align: center;
+    // }
+    main{
+        padding-left: 300px;
+        .daily-information{
+            .status-icon{
+                width: 79px;
+                height: 66px;
+                display: inline-block;
+                background: url(https://g.alicdn.com/aliyun/ecs2/2.15.18/styles/images/home-security-status.png) no-repeat -79px 0;
+            }
+            .text-wrap{
+                position: relative;
+                top: -26px;
+                margin-left: 8px;
+                .text-success{
+                    color:green;
+                }   
+            }
+
+            .robot-contronl{
+                margin-top: 25px;
+            }
+        }
+    }
+}
+
+.hide{
+    display: none !important;
+}
+
+.show{
+    display: block !important;
+}
+
+

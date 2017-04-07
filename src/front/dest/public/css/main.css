@@ -1,0 +1,84 @@
+@charset "UTF-8";
+/* line 4, /media/mmx/学习/前端项目/视频/src/public/sass/tool/base.scss */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* line 8, /media/mmx/学习/前端项目/视频/src/public/sass/tool/base.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 6, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+body, html {
+  height: 100%;
+}
+
+/* line 9, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+li {
+  list-style: none;
+}
+
+/* line 13, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.side-bg {
+  background: #00bcd4;
+}
+
+@media only screen and (max-width: 992px) {
+  /* line 19, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+  header, main, footer {
+    padding-left: 0 !important;
+  }
+}
+
+/* line 23, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.main-container {
+  background: #eeefff;
+  height: 100%;
+}
+
+/* line 27, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.main-container header {
+  padding-left: 300px;
+}
+
+/* line 35, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.main-container main {
+  padding-left: 300px;
+}
+
+/* line 38, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.main-container main .daily-information .status-icon {
+  width: 79px;
+  height: 66px;
+  display: inline-block;
+  background: url(https://g.alicdn.com/aliyun/ecs2/2.15.18/styles/images/home-security-status.png) no-repeat -79px 0;
+}
+
+/* line 44, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.main-container main .daily-information .text-wrap {
+  position: relative;
+  top: -26px;
+  margin-left: 8px;
+}
+
+/* line 48, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.main-container main .daily-information .text-wrap .text-success {
+  color: green;
+}
+
+/* line 53, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.main-container main .daily-information .robot-contronl {
+  margin-top: 25px;
+}
+
+/* line 60, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.hide {
+  display: none !important;
+}
+
+/* line 64, /media/mmx/学习/前端项目/视频/src/public/sass/main.scss */
+.show {
+  display: block !important;
+}

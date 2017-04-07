@@ -1,0 +1,21 @@
+@charset "UTF-8";
+/* line 4, /media/mmx/学习/前端项目/视频/src/public/sass/tool/base.scss */
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* line 8, /media/mmx/学习/前端项目/视频/src/public/sass/tool/base.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 7, /media/mmx/学习/前端项目/视频/src/public/sass/choose.scss */
+.center {
+  text-align: center;
+}
+
+/* line 11, /media/mmx/学习/前端项目/视频/src/public/sass/choose.scss */
+.choose {
+  font-size: 25px !important;
+}

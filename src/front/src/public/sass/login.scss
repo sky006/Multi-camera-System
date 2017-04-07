@@ -1,0 +1,23 @@
+@import "tool/base.scss";
+@import "tool/_size.scss";
+@import "tool/_center.scss";
+@import "tool/_clearfix.scss";
+
+
+body,html{
+    height: 100%;
+    position: relative;
+    min-width:500px;
+    min-height:500px;
+    background: url('/src/img/bg.jpg') no-repeat
+}
+
+.login-container{
+    @include center();
+    @include size(300px,200px);
+
+    margin-top:-10%;
+}
+.h2{
+    padding-left: 30px;
+}
