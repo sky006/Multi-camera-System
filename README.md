@@ -1,6 +1,10 @@
 # Multi-camera-System
 Object-tracking, Recording, Tracking
 
+## Introcuction:
+
+![Image text](https://github.com/sky006/Multi-camera-System/blob/master/architecture.jpg)
+
 文件描述：
 demos：项目的演示视频
 
